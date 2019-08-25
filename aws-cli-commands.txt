@@ -1,0 +1,5 @@
+#get the ec2 instances which are running at the moment-->
+ aws ec2 describe-instances --filters Name=instance-state-code,Values=16
+
+ #get ec2 instances which are stoped at the moment
+ aws ec2 describe-instances --filters Name=instance-state-code,Values=80
