@@ -11,14 +11,14 @@ response=ec2_cons.create_security_group (
     Description=sg_description,
     GroupName=sg_name
     )
-    print(json.dumps(response,indent=2,sort_keys=true))
+print(json.dumps(response,indent=2,sort_keys=True))
 
-    #Rule for security group:--
-    response=ec2_cons.authorize_security_group_ingress(
+#Rule for security group:--
+response=ec2_cons.authorize_security_group_ingress(
         CidrIp=my_ip_cidr,
         FromPort=3306,
         GroupName=sg_name,
         ToPort=3306,
         IpProtocol='tcp'
     )
-    print("Security group should be created ! Verify the same in AWS Console")
+print("Security group should be created ! Verify the same in AWS Console")
