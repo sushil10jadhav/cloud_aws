@@ -1,0 +1,29 @@
+Dynamodb Commands:-
+Create IAM role - EC2_dynamodbFullAccess
+Launch EC2 instance with this role attached and cretae below table from this ec2 instance and popullate the tbales.
+
+Table Name :	ProductCatalog
+Primary Key:	Partition key: Id (Number)
+wget https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/sampledata.zip
+unzip sampledata.zip
+
+aws dynamodb batch-write-item --request-items file://ProductCatalog.json --region us-east-1
+
+Table Name:		Forum
+Primary Key:	Partition key: Name (String)
+
+aws dynamodb batch-write-item --request-items file://Forum.json --region us-east-1
+
+Table Name:		Thread
+Primary Key:	Partition key:ForumName (String)
+Sort key: 		Subject (String)
+
+aws dynamodb batch-write-item --request-items file://Thread.json --region us-east-1
+
+Table Name:		Reply
+Primary Key:	Partition key: Id (String)
+Sort key: 		ReplyDateTime (String)
+GSI for Reply table:	Index Name :	PostedBy-Message-Index
+						Primary Key:	Partition key: PostedBy (String)
+							Sort key: Message (String)
+aws dynamodb batch-write-item --request-items file://Reply.json --region us-east-1
