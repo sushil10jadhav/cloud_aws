@@ -27,3 +27,9 @@ GSI for Reply table:	Index Name :	PostedBy-Message-Index
 						Primary Key:	Partition key: PostedBy (String)
 							Sort key: Message (String)
 aws dynamodb batch-write-item --request-items file://Reply.json --region us-east-1
+
+Delete these tbales:-
+aws dynamodb delete-table --table-name ProductCatalog --region us-east-1
+aws dynamodb delete-table --table-name Forum --region us-east-1
+aws dynamodb delete-table --table-name Thread --region us-east-1
+aws dynamodb delete-table --table-name Reply --region us-east-1
