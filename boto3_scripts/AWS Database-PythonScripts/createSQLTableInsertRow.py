@@ -112,3 +112,14 @@ def main():
 
 if __name__== '__main__':
     main()
+
+    
+"""    
+$ python createSQLTableInsertRow.py
+Python program to create SQL table in mariadb
+RDS Endpoint:nypsummit.cderqeqkqd9h.us-east-1.rds.amazonaws.com
+Query Result:=
+[('10.2.21-MariaDB-log',)]
+Table created!
+Success
+"""
