@@ -4,9 +4,11 @@ import datetime
 
 def dropDBInstance(rdsId):
     try:
+        
         rds_identifier=rdsId
         session=boto3.session.Session(profile_name="DevAdmin")
         rds_client=session.client(service_name="rds",region_name="us-east-1")
+        
         response=rds_client.delete_db_instance(DBInstanceIdentifier=rds_identifier,SkipFinalSnapshot=True)
         print ("RDS Instance is being droped , which may take 10-20 mins")
         waiter=rds_client.get_waiter('db_instance_deleted')
@@ -18,7 +20,7 @@ def dropDBInstance(rdsId):
         ec2_cons=session.client(service_name="ec2",region_name="us-east-1")
         sg_name="rds_sg_dev"
 
-        response=ec2_client.describe_security_groups(
+        response=ec2_cons.describe_security_groups(
             GroupNames=[
                 sg_name
             ])
@@ -30,7 +32,7 @@ def dropDBInstance(rdsId):
         
         print ("Clean up completed!!!")
 
-    except expression as e:
+    except Exception as e:
         print (e.message)        
         raise e
 
