@@ -1,0 +1,62 @@
+#UserData.sh
+#!/bin/bash
+apt-get install apache2
+systemctl start apache2
+systemctl enable apache2
+
+#First create key pair -->
+aws ec2 create-key-pair \
+    --key-name MyKey \
+    --query 'KeyMaterial' \
+    --output text \
+    --profile="DevAdmin" > MyKey.pem
+
+Spinup Linux instance :--
+Ubuntu Linux :-
+aws ec2 run-instances \
+    --image-id "ami-04b9e92b5572fa0d1" \
+    --count 1 \
+    --instance-type t2.micro \
+    --key-name MyKey \
+    --security-group-ids "sg-098685325ca0ae7de" \
+    --subnet-id "subnet-9a7c22fd" \
+    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value="AnibleWebserver1"}]' \
+    --user-data file://UserData.sh \
+    --profile="DevAdmin"
+
+Get the Public Ip  Address -
+aws ec2 describe-instances \
+    --instance-ids i-02114fff29bf4e7ad i-0453c9045e26c070f\
+    --query 'Reservations[*].Instances[*].PublicIpAddress' \
+    --output text \
+    --profile="DevAdmin"
+
+aws ec2 describe-instances \
+    --instance-ids i-0544f12f3b402bb34 \
+    --query 'Reservations[*].Instances[*].PublicIpAddress' \
+    --output text \
+    --profile="DevAdmin"
+    
+
+aws ec2 stop-instances \
+    --instance-ids i-02114fff29bf4e7ad i-0453c9045e26c070f\
+    --profile="DevAdmin"
+
+aws ec2 start-instances \
+    --instance-ids i-02114fff29bf4e7ad i-0453c9045e26c070f \
+    --profile="DevAdmin"
+
+
+aws ec2 terminate-instances \
+    --instance-ids i-02114fff29bf4e7ad i-0453c9045e26c070f i-0544f12f3b402bb34\
+    --profile="DevAdmin"
+
+
+aws ec2 run-instances --image-id "ami-04b9e92b5572fa0d1" --count 1 --instance-type t2.micro --ke
+y-name amazonKeys --security-group-ids "sg-0025c050a9543420c" --subnet-id "subnet-1ea2cb11" --tag-specifications 'ResourceType=instance,Tags=[{Key
+=Name,Value="Linux Machine"}]' 
+
+Windows :
+aws ec2 run-instances --image-id "ami-04b9e92b5572fa0d1" --count 1 --instance-type t2.micro --ke
+y-name amazonKeys --security-group-ids "sg-0025c050a9543420c" --subnet-id "subnet-1ea2cb11" --tag-specifications 'ResourceType=instance,Tags=[{Key
+=Name,Value="Linux Machine"}]' 
