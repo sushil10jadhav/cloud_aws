@@ -1,0 +1,38 @@
+Spinup 5-6 linux machines (ubuntu16) on AWS
+On Ansible control node -->
+Add public hostnames in /etc/hosts file as below -->
+52.90.6.227     server00-pvt.sushiljadhav.com server00
+3.83.110.169    client01-pvt.sushiljadhav.com client01
+54.175.187.40   client02-pvt.sushiljadhav.com client02
+3.82.197.154    client03-pvt.sushiljadhav.com client03
+3.93.152.83     client04-pvt.sushiljadhav.com client04
+
+on ansible control node ->
+ssh-keygen
+sshpass -f<(printf "%s\n" sushil123) ssh-copy-id -o StrictHostKeyChecking=no sushil@client01-pvt.sushiljadhav.com
+
+try ssh into instances-->
+ssh sushil@client01-pvt.sushiljadhav.com
+ssh sushil@client02-pvt.sushiljadhav.com
+ssh sushil@client03-pvt.sushiljadhav.com
+
+This will copy public keys on all client machins for passwordless authentication to those clients.
+*now install ansible only on ansible-control node...
+apt install anisble -y
+
+
+ssh-copy-id -i /home/sushil/.ssh/id_rsa sushil@client01-pvt.sushiljadhav.com
+sshpass -f<(printf "%s\n" sushil123) ssh-copy-id -i /home/sushil/.ssh/id_rsa sushil@client02-pvt.sushiljadhav.com
+ssh-copy-id -i /home/sushil/.ssh/id_rsa sushil@client03-pvt.sushiljadhav.com
+
+ssh-copy-id -i /home/sushil/.ssh/id_rsa.pub sushil@client04-pvt.sushiljadhav.com
+
+ssh sushil@client04-pvt.sushiljadhav.com
+
+For any additional instance required-->
+--spin up aws instance with user data - get puiblic ip 
+-- goto contril node
+-- add public id of new 5th instance in /etc/hosts
+54.227.204.15 client05-pvt.sushiljadhav.com client05
+--- now copy /home/sushil/.ss/id_rsa.pub to this new instace -->
+ssh-copy-id -i /home/sushil/.ss/id_rsa.pub sushil@client05-pvt.sushiljadhav.com
