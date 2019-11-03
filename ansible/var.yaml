@@ -1,0 +1,9 @@
+---
+instance_type: t2.micro
+security_group: webservers_sg
+image: ami-04b9e92b5572fa0d1
+keypair: AnsibleKeyEC2
+region: us-east-1
+
+aws_access_key: "{{ vault_aws_access_key }}"
+aws_secret_key: "{{ vault_aws_secret_key }}"
