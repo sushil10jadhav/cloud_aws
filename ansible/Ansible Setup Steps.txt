@@ -18,6 +18,9 @@ ssh sushil@client03-pvt.sushiljadhav.com
 
 This will copy public keys on all client machins for passwordless authentication to those clients.
 *now install ansible only on ansible-control node...
+apt update
+apt install software-properties-common
+apt-add-repository --yes --update ppa:ansible/ansible
 apt install anisble -y
 
 

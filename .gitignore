@@ -9,3 +9,5 @@
 *.tfvars
 
 *.tf.un~*
+
+*.pem

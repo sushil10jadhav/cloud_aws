@@ -60,3 +60,30 @@ Windows :
 aws ec2 run-instances --image-id "ami-04b9e92b5572fa0d1" --count 1 --instance-type t2.micro --ke
 y-name amazonKeys --security-group-ids "sg-0025c050a9543420c" --subnet-id "subnet-1ea2cb11" --tag-specifications 'ResourceType=instance,Tags=[{Key
 =Name,Value="Linux Machine"}]' 
+
+
+
+---#####
+
+create security group:--
+aws ec2 create-security-group --group-name MySecurityGroup --description "My security group" --vpc-id vpc-1a2b3c4d
+
+ingress-->
+ssh --
+aws ec2 authorize-security-group-ingress \\
+    --group-name MySecurityGroup \
+    --protocol tcp \
+    --port 22 \
+    --cidr 203.0.113.0/24
+
+http:-
+aws ec2 authorize-security-group-ingress \
+    --group-id sg-1234567890abcdef0 \
+    --protocol tcp \
+    --port 80 \
+    --source-group sg-1a2b3c4d
+
+RDP->
+aws ec2 authorize-security-group-ingress \
+    --group-id sg-1234567890abcdef0 \
+    --ip-permissions IpProtocol=tcp,FromPort=3389,ToPort=3389,IpRanges=[{CidrIp=172.31.0.0/16}] IpProtocol=icmp,FromPort=-1,ToPort=-1,IpRanges=[{CidrIp=172.31.0.0/16}]
