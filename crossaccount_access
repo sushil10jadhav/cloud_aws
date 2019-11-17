@@ -1,0 +1,52 @@
+I hv created role in account A with trusted entity - another aws account and s3 full access and specified other account id (B).
+my question - next to this what i need to do? so that account B can access resources of account A 
+do i need to assign this policy in to users/groups in account A or account B?
+
+Ans:-
+login account B
+ create iam user , custom policy in that policy provide ARN of role created in account A.
+then attach this policy to iam user.
+
+Use this custom policy-->
+{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Allow",
+    "Action": "sts:AssumeRole",
+    "Resource": "arn:aws:iam::474580781491:role/sushilAccountS3"
+  }
+}
+
+
+
+A:474580781491
+
+in SL - cretaed role->
+sushilAccountS3
+
+in SL account - role arn :
+arn:aws:iam::474580781491:role/sushilAccountS3
+
+
+in SL created role -->
+https://signin.aws.amazon.com/switchrole?roleName=sushilAccountS3&account=mysl
+
+
+Account B : 48291390162  :-->
+In sushil account created user - testCross / pass1234
+cretae custome policy -->
+B-CrossAccount
+
+{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Allow",
+    "Action": "sts:AssumeRole",
+    "Resource": "arn:aws:iam::474580781491:role/sushilAccountS3"
+  }
+}
+
+Description : To access SL resources from sushil account.
+arn :-- arn:aws:iam::48291390162:policy/B-CrossAccount
+
+
